@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "bot-webagenda",
+  "name": "Bot Web Agenda - de Web Atom",
   "icons": [
     {
       "src": "favicon.ico",
