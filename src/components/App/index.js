@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import logo from '../../assets/logo.svg';
+import Chat from '../Chat';
 
-import logo from './logo.svg';
-import './App.css';
-
-import UserDetail from './UserDetail';
+import '../../styles/App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -11,11 +12,14 @@ function App() {
       <Router>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo web agenda" />
+          <h4>Agendamentos online</h4>
         </header>
+
         <Switch>
-          <Route path={'/:group'} component={UserDetail}></Route>
-          <Route path={'/'} component={UserDetail}></Route>
+          <Route path={['/:group', '/']} component={Chat} />
         </Switch>
+
+        <ToastContainer />
       </Router>
     </div>
   );
