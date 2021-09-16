@@ -32,9 +32,4 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
     - name: Deploy to S3
       run: aws s3 sync build/ s3://${{ secrets.STAGING_AWS_BUCKET }} --acl public-read
-    - name: Comment in pull_request
-      uses: mb2dev/github-action-comment-pull-request@1.0.0
-      with:
-        message: "Deploy realizado em staging! Agora só correr pro abraço"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        reactions: "+1 | -1 | laugh | hooray | confused | heart | rocket | eyes"
+      
