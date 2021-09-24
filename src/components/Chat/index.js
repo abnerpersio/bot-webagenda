@@ -98,7 +98,7 @@ export default function Chat() {
       .catch(() => {
         toast.error('Oops! Não foi possível carregar.');
       });
-  }, [username]);
+  }, [username, client]);
 
   const openChat = () => {
     document.querySelector('#blip-chat-open-iframe').click();
