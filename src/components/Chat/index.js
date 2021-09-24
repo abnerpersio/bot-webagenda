@@ -14,10 +14,10 @@ import { Container } from './styles';
 export default function Chat() {
   const [isModalOpen, setModal] = useState(false);
   const [client, setClient] = useState(null);
-  const [chatKey, setChatKey] = useState(null);
+  const [chatData, setChatData] = useState(null);
   const [nameInput, setNameInput] = useState('');
   const [phoneInput, setPhoneInput] = useState('');
-  const { group } = useParams();
+  const { username } = useParams();
 
   function toggleModal() {
     setModal((prevState) => !prevState);
@@ -61,7 +61,7 @@ export default function Chat() {
     setClientData();
   }
 
-  if (!group) {
+  if (!username) {
     toast.error('Oops, algo está errado. Verifique o link.');
     return null;
   }
@@ -79,7 +79,7 @@ export default function Chat() {
 
   useEffect(() => {
     fetch(
-      `${API_URL}/webhooks/chatid?group=${group}`,
+      `${API_URL}/webhooks/user/${username}`,
     )
       .then(async (response) => {
         const data = await response.json();
@@ -88,26 +88,26 @@ export default function Chat() {
           return null;
         }
 
-        setChatKey(data);
+        setChatData(data);
         return data;
       })
       .catch(() => {
         toast.error('Oops! Não foi possível carregar.');
       });
-  }, [group]);
+  }, [username]);
 
   const openChat = () => {
     document.querySelector('#blip-chat-open-iframe').click();
   };
 
   useEffect(() => {
-    if (!chatKey || !client) {
+    if (!chatData || !client) {
       return;
     }
 
     const blipClient = new window.BlipChat();
     blipClient
-      .withAppKey(chatKey)
+      .withAppKey('YXRlbmRpbWVudG9vbmxpbmUzMzoxYzI1YjYzNy1kYWM1LTRkMzgtYTViMi0xMWU0OWZlNTNhYjQ=')
       .withButton({ color: '#005ef4' })
       .withEventHandler(window.BlipChat.CREATE_ACCOUNT_EVENT, () => {
         blipClient.sendMessage({
@@ -115,33 +115,40 @@ export default function Chat() {
           content: 'ola, gostaria de agendar',
         });
       })
+      .withAuth({
+        authType: window.BlipChat.DEV_AUTH,
+        userIdentity: client?.name,
+        userPassword: client?.phone,
+      })
       .withAccount({
         fullName: client?.name,
         phoneNumber: client?.phone,
       })
       .withCustomMessageMetadata({
-        chat_group: group,
+        chat_group: username,
+        chat_user: username,
+        chat_user_id: chatData?._id,
       })
       .build();
-  }, [chatKey, client]);
+  }, [chatData, client]);
 
   return (
     <div className="App-content">
       <SkeletonTheme color="#202020" highlightColor="#444">
 
         <p>
-          {chatKey ? (
+          {chatData ? (
             <>
               robô de
               {' '}
-              {group}
+              {username}
             </>
           ) : <Skeleton delay={1} height={24} width={350} count={2} style={{ display: 'block', margin: '10px 0px' }} />}
         </p>
       </SkeletonTheme>
 
       {
-        chatKey && (
+        chatData && (
           <>
             <p>Clique no botão ⬇⬇</p>
             <button
