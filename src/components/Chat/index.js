@@ -78,6 +78,10 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
+    if (!username || !client) {
+      return;
+    }
+
     fetch(
       `${API_URL}/webhooks/user/${username}`,
     )
