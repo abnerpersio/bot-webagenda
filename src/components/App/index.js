@@ -16,7 +16,7 @@ function App() {
         </header>
 
         <Switch>
-          <Route path={['/:group', '/']} component={Chat} />
+          <Route path={['/:username', '/']} component={Chat} />
         </Switch>
 
         <ToastContainer />

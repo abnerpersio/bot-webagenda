@@ -32,3 +32,4 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
     - name: Deploy to S3
       run: aws s3 sync build/ s3://${{ secrets.STAGING_AWS_BUCKET }} --acl public-read
+      
