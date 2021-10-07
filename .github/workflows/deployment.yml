@@ -6,7 +6,7 @@ on:
       - main
 env:
   CI: false
-  REACT_APP_API_URL: https://web-agenda-api.herokuapp.com
+  REACT_APP_API_URL: https://api.webagenda.app
 
 jobs:
   build:
