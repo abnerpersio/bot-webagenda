@@ -84,6 +84,11 @@ export default function Chat() {
 
     fetch(
       `${API_URL}/webhooks/user/${username}`,
+      {
+        headers: {
+          'x-wa-verification': 'verified',
+        },
+      },
     )
       .then(async (response) => {
         const data = await response.json();
