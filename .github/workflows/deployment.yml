@@ -6,7 +6,7 @@ on:
       - main
 env:
   CI: false
-  REACT_APP_API_URL: https://api.webagenda.app
+  REACT_APP_API_URL: https://api.webagenda.app/wa
 
 jobs:
   build:
