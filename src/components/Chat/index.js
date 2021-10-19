@@ -126,12 +126,16 @@ export default function Chat() {
       })
       .withAuth({
         authType: window.BlipChat.DEV_AUTH,
-        userIdentity: client?.name,
+        userIdentity: `(${username})_${client?.name}_${client?.phone}`,
         userPassword: client?.phone,
       })
       .withAccount({
         fullName: client?.name,
         phoneNumber: client?.phone,
+        extras: {
+          created_user_id: chatData?._id,
+          created_user: username,
+        },
       })
       .withCustomMessageMetadata({
         chat_group: username,
